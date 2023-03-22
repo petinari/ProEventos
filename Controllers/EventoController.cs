@@ -26,7 +26,7 @@ public class EventoController : ControllerBase
             Local = "Terenos",
             Lote = "Segundo",
             QtdPessoas = 123,
-            Tema = "Coisas asd",
+            Tema = "Coisas Complicadas",
             ImagemURL = "http://www.google.com.br/asd"
         },
     };
