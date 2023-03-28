@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddScoped<IEventosService, EventoService>();
 builder.Services.AddScoped<IGeralPersist, GeralPersistence>();
 builder.Services.AddScoped<IEventosPersist, EventosPersistence>();
