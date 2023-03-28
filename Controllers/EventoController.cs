@@ -18,34 +18,35 @@ public class EventoController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<ActionResult<Evento[]>> GetAsync()
     {
         try
         {
-            var eventos = eventoService.GetAllEventosAsync(true);
+            var eventos = await eventoService.GetAllEventosAsync(true);
             if (eventos == null)
             {
-                return NotFound("Nem um evento encontrado.");
+                return StatusCode(500);
             }
-            return Ok(eventos);
+            return eventos;
         }
         catch (Exception ex)
         {
             return this.StatusCode(StatusCodes.Status500InternalServerError,
-                $"Erro ao tentar recuperar eventos. Erro {ex.Message}");
+               $"Erro ao tentar recuperar eventos. Erro {ex.Message}");
+
         }
     }
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<ActionResult<Evento>> GetById(int id)
     {
         try
         {
-            var eventos = eventoService.GetEventosByIdAsync(id, true);
+            var eventos = await eventoService.GetEventosByIdAsync(id, true);
             if (eventos == null)
             {
                 return NotFound("Nem um evento por Id encontrado.");
             }
-            return Ok(eventos);
+            return eventos;
         }
         catch (Exception ex)
         {
@@ -54,16 +55,16 @@ public class EventoController : ControllerBase
         }
     }
     [HttpGet("{tema}/tema")]
-    public async Task<IActionResult> GetEventosByTema(string tema)
+    public async Task<ActionResult<Evento[]>> GetEventosByTema(string tema)
     {
         try
         {
-            var eventos = eventoService.GetAllEventosByTemaAsync(tema, true);
+            var eventos = await eventoService.GetAllEventosByTemaAsync(tema, true);
             if (eventos == null)
             {
                 return NotFound("Nem um evento por tema encontrado.");
             }
-            return Ok(eventos);
+            return eventos;
         }
         catch (Exception ex)
         {
@@ -72,7 +73,7 @@ public class EventoController : ControllerBase
         }
     }
     [HttpPost]
-    public async Task<IActionResult> Post(Evento model)
+    public async Task<ActionResult<Evento>> Post(Evento model)
     {
         try
         {
@@ -81,7 +82,7 @@ public class EventoController : ControllerBase
             {
                 return BadRequest("Erro ao adicionar eventos");
             }
-            return Ok(evento);
+            return evento;
         }
         catch (Exception ex)
         {
@@ -90,7 +91,7 @@ public class EventoController : ControllerBase
         }
     }
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(Evento evento)
+    public async Task<ActionResult<Evento>> Put(Evento evento)
     {
         try
         {
@@ -99,7 +100,7 @@ public class EventoController : ControllerBase
             {
                 return BadRequest("Erro ao atualizar eventos");
             }
-            return Ok(_evento);
+            return _evento;
         }
         catch (Exception ex)
         {
